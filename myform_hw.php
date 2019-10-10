@@ -1,12 +1,8 @@
+<!DOCTYPE html>
 <?php
 ini_set('display_errors',1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-function getName(){
-	if(isset($_POST['name'])){
-		echo "<p>Hello, " . $_POST['name'] . "</p>";
-	}
-}
 function checkPasswords(){
 	if(isset($_POST['password']) && isset($_POST['confirm'])){
 		if($_POST['password'] == $_POST['confirm']){
@@ -32,27 +28,75 @@ function validate(){
 	if(password == conf){
 		
 		pv.style.display = "none";
-		form.confirm.className= "noerror";
-	
+		form.confirm.className= "noerror";	
 	}
 	else{
 		pv.style.display = "block";
 		pv.innerText = "Passwords don't match";
+		//form.confirm.focus();
 		form.confirm.className = "error";
+		//form.confirm.style = "border: 1px solid red;";
 		succeeded = false;
 	}
+	var email = form.email.value;
+	var ev = document.getElementById("validation.email");
+	//this won't show if type="email" since browser handles
+	//better validation. Change to type="text" to test
+	if(email.indexOf('@') > -1){
+		ev.style.display = "none";
+	}
+	else{
+		ev.style.display = "block";
+		ev.innerText = "Please enter a valid email address";
+		succeeded = false;
+	}
+	/*
+	add validation for a proper selection from dropdown.
+	First element should be "Select One", and it should require that
+	some other value is selected in order to proceed
+	*/
+	 function Vali()
+            {
+                var e = document.getElementById("dropdown");
+                var strUser = e.options[e.selectedIndex].value;
+
+                var strUser1 = e.options[e.selectedIndex].text;
+                if(strUser==1)
+                {
+                    alert("Please select option");
+                }
+            }
+	return succeeded;	
 }
 </script>
+<style>
+input { border: 1px solid black; }
+.error {border: 1px solid red;}
+.noerror {border: 1px solid black;}
+</style>
 </head>
-<body><?php getName();?>
+<body>
+<div style="margin-left: 50%; margin-right:50%;">
 <form method="POST" action="#" onsubmit="return validate();">
 <input name="name" type="text" placeholder="Enter your name"/>
-<input name="password" type="password" placeholder="Enter a password"/>
-<input name="confirm" type="password" placeholder="confirm a password"/>
-<span style="display:none;" id="validation.password"></span>
 
-<input type="submit" value="Try it"/>
+<input name="email" type="email" placeholder="name@example.com"/>
+<span id="validation.email" style="display:none;"></span>
+
+<input type="password" name="password" placeholder="Enter password"/>
+<input type="password" name="confirm" placeholder="Re-Enter password"/>
+<span style="display:none;" id="validation.password"></span>
+<select name="dropdown "id="dropdown" type="dropdown">
+	<option value="1">select one</option>
+	<option value="2">Honda</option>
+	<option value="3">Toyota</option>
+	<option value="4">Nissan</option>
+</select>
+
+
+<input type="submit" onclick="Vali()"  value="Try it"/>
 </form>
+</div>
 </body>
 </html>
 <?php checkPasswords();?>
