@@ -55,17 +55,12 @@ function validate(){
 	First element should be "Select One", and it should require that
 	some other value is selected in order to proceed
 	*/
-	 function Vali()
-            {
-                var e = document.getElementById("dropdown");
-                var strUser = e.options[e.selectedIndex].value;
-
-                var strUser1 = e.options[e.selectedIndex].text;
-                if(strUser==1)
-                {
-                    alert("Please select option");
-                }
-            }
+	var sel = form.dropdown;
+	if(sel.selectedIndex == 0){
+		alert("Please select one company");
+		succeeded = false;
+	}
+	console.log(sel.options[sel.selectedIndex].value);
 	return succeeded;	
 }
 </script>
@@ -86,15 +81,15 @@ input { border: 1px solid black; }
 <input type="password" name="password" placeholder="Enter password"/>
 <input type="password" name="confirm" placeholder="Re-Enter password"/>
 <span style="display:none;" id="validation.password"></span>
-<select name="dropdown "id="dropdown" type="dropdown">
-	<option value="1">select one</option>
-	<option value="2">Honda</option>
-	<option value="3">Toyota</option>
-	<option value="4">Nissan</option>
+<select name="dropdown"id="myid">
+	<option value="0">select one</option>
+	<option value="1">Honda</option>
+	<option value="2">Toyota</option>
+	<option value="3">Nissan</option>
 </select>
 
 
-<input type="submit" onclick="Vali()"  value="Try it"/>
+<input type="submit"  value="Try it"/>
 </form>
 </div>
 </body>
