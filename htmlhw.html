@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+p{color: blue;}
+h1,h2{background-color: yellow;}
+.myClassname{background-color:green;}
+#myId{}
+</style>
+<script>
+	function queryParam(){
+		var params = new URLSearchParams(location.search);
+		if(params.has('page')){
+			var page = params.get('page');
+			var ele = document.getElementById(page);
+			if(ele){
+				let home = document.getElementById('home');
+				let about = document.getElementById('about');
+				home.style.display="none";
+				about.style.display = "none";
+				ele.style.display = "block";
+			}
+		}
+		else{
+			let home = document.getElementById('home');
+			home.style.display = "block";
+			let about = document.getElementById('about');
+			about.style.display=  "none";
+		}
+	}
+</script>
+</head>
+<body onload="queryParam();">
+	<header>
+		<nav> 
+			<a href="?page=home">Home</a> |
+			<a href="?page=about">About</a>
+			<!--Create route for Home-->
+			<!--Create route for About-->
+		</nav>
+	</header>
+	<div id="home">
+		This is home
+	</div>
+	<div id="about" style="display:none;">
+		<section class="myClassname">
+			<h1>About</h1>
+			<p>Our company is here to provide huge collection of cars.
+			   we've all the types of cars and we have great deal on cars.
+			   we have new cars,pre-owned certified cars,used cars.
+			   Users receive upfront pricing informations when they connect with our  Certified Dealers
+			     allowing them to enjoy a more confident buying experience.
+			   We have  network of over 19,000 Certified Dealers and currently,
+ 			      over one third of all new car buyers engage with the our  network during their purchasing process.
+		        </p>
+		</section>
+		<article>
+			<h2>The Team</h2>
+			<p>Just some people working on some project</p>
+			
+		</article>
+		<p>last updated <time>00:00</time></p>
+		<!-- About page using HTML5 Semantics-->
+		<p>Task Completion: <progress value="15" max="100"
+			onclick="this.value++" 
+			oncontextmenu="this.value--;event.preventDefault();"></progress></p>
+	</div>
+	<footer></footer>
+</body>
+</html>
