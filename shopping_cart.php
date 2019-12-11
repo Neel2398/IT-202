@@ -11,6 +11,7 @@ $code = $row['code'];
 $price = $row['price'];
 $image = $row['image'];
 
+//echo "<BR> " . $name . "<BR>" . $code . "<BR>" . $prince . "<Br>" . $image;
 $cartArray = array(
 	$code=>array(
 	'name'=>$name,
@@ -22,38 +23,54 @@ $cartArray = array(
 
 if(empty($_SESSION["shopping_cart"])) {
 	$_SESSION["shopping_cart"] = $cartArray;
-	$status = "<div class='box'>Product is added to your cart!</div>";
+	$status = "<div class='box'  style='color:green; border:1px solid green;padding:15px'>Product is added to your cart!</div>";
 }else{
 	$array_keys = array_keys($_SESSION["shopping_cart"]);
 	if(in_array($code,$array_keys)) {
-		$status = "<div class='box' style='color:red;'>
+		$status = "<div class='box' style='color:red;border:1px solid red; padding:15px'>
 		Product is already added to your cart!</div>";	
 	} else {
 	$_SESSION["shopping_cart"] = array_merge($_SESSION["shopping_cart"],$cartArray);
-	$status = "<div class='box'>Product is added to your cart!</div>";
+	$status = "<div class='box' style='color:green;border: 1px solid green;padding:15px'>Product is added to your cart!</div>";
 	}
 
 	}
 }
+
+
+if(isset($_REQUEST['Logout']) && $_REQUEST['Logout']=="logout")
+{
+	unset($_SESSION['Logged']);
+	header("location:index.php?Msg=You are successfully Logout ");	
+}
+
+
 ?>
 <html>
 <head>
-<title>Demo Simple Shopping Cart using PHP and MySQL - AllPHPTricks.com</title>
-<link rel='stylesheet' href='css/style.css' type='text/css' media='all' />
+<link rel='stylesheet' href='style.css' type='text/css' media='all' />
 </head>
-<body>
+<body >
 <div style="width:700px; margin:50 auto;">
-
-<h2>Demo Simple Shopping Cart using PHP and MySQL</h2>   
-
+<?php
+	
+?>  
+<form>
+<button type='submit' name="Logout" value="logout" name="logout" class='logout'>Logout</button>
+</form>
 <?php
 if(!empty($_SESSION["shopping_cart"])) {
 $cart_count = count(array_keys($_SESSION["shopping_cart"]));
 ?>
 <div class="cart_div">
-<a href="cart.php"><img src="cart-icon.png" /> Cart<span><?php echo $cart_count; ?></span></a>
+<a href="cart_1.php"><meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<button style="font-size:24px"><i class="fa fa-shopping-cart"></i></button>
+</a>
 </div>
+
 <?php
+echo "<BR><BR>";
 }
 
 $result = mysqli_query($con,"SELECT * FROM `products`");
@@ -72,14 +89,20 @@ mysqli_close($con);
 ?>
 
 <div style="clear:both;"></div>
+<!DOCTYPE html>
+<html>
+<head>
+<div class="message_box" style="margin:10px 0px;">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<button style="font-size:24px"><i class="fa fa-shopping-cart"></i></button>
+</head>
+</html> 
 
 <div class="message_box" style="margin:10px 0px;">
 <?php echo $status; ?>
 </div>
 
-<br /><br />
-<a href="https://www.allphptricks.com/simple-shopping-cart-using-php-and-mysql/"><strong>Tutorial Link</strong></a> <br /><br />
-For More Web Development Tutorials Visit: <a href="https://www.allphptricks.com/"><strong>AllPHPTricks.com</strong></a>
 </div>
 </body>
 </html>
